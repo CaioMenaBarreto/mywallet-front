@@ -2,15 +2,37 @@ import styled from "styled-components"
 import { BiExit } from "react-icons/bi"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
 import { useContext } from "react"
-import AuthContext from "../constexts/authContexts"
+import AuthContext from "../contexts/authContexts"
 import { useQuickOut } from "../hooks/useQuickOut"
 import { useLogout } from "../services/auth"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import TransactionItem from "../components/TransactionItem"
+import { useEffect } from "react"
+import axios from "axios"
+import UsePromptLogin from "../components/usePrompt"
 
 export default function HomePage() {
-  const { userName } = useContext(AuthContext);
+  const { userName, token } = useContext(AuthContext);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const navigate = useNavigate();
+  const [transactions, setTransactions] = useState(undefined);
+  const config = { headers: { Authorization: `Bearer ${token}` } };
 
-  useQuickOut();
+  const showLoginPrompt = () => {
+    setShowLoginModal(true);
+  };
+
+  useQuickOut(showLoginPrompt);
   const logout = useLogout();
+
+  useEffect(() => {
+    axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/transactions`, config)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => console.error(err.response.data));
+  }, [])
 
   return (
     <HomeContainer>
@@ -21,23 +43,8 @@ export default function HomePage() {
 
       <TransactionsContainer>
         <ul>
-          <ListItemContainer>
-            <div>
-              <span>30/11</span>
-              <strong>Almoço mãe</strong>
-            </div>
-            <Value color={"negativo"}>120,00</Value>
-            <Span>x</Span>
-          </ListItemContainer>
-
-          <ListItemContainer>
-            <div>
-              <span>15/11</span>
-              <strong>Salário</strong>
-            </div>
-            <Value color={"positivo"}>3000,00</Value>
-            <Span>x</Span>
-          </ListItemContainer>
+          <TransactionItem />
+          <TransactionItem />
         </ul>
 
         <article>
@@ -58,6 +65,9 @@ export default function HomePage() {
         </button>
       </ButtonsContainer>
 
+      {showLoginModal && (
+        <UsePromptLogin />
+      )}
     </HomeContainer>
   )
 }

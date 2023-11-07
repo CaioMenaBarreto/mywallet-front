@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage"
 import SignInPage from "./pages/SignInPage"
 import SignUpPage from "./pages/SignUpPage"
 import TransactionsPage from "./pages/TransactionPage"
-import AuthContext from "./constexts/authContexts"
+import AuthContext from "./contexts/authContexts"
 import { useState } from "react"
 
 export default function App() {
