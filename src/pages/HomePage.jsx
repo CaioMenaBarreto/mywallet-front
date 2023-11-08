@@ -8,16 +8,14 @@ import { useLogout } from "../services/auth"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import TransactionItem from "../components/TransactionItem"
-import { useEffect } from "react"
-import axios from "axios"
 import UsePromptLogin from "../components/usePrompt"
+import { Oval } from "react-loader-spinner"
+import { useGetTransactions } from "../services/transactions"
 
 export default function HomePage() {
-  const { userName, token } = useContext(AuthContext);
+  const { userName } = useContext(AuthContext);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const navigate = useNavigate();
-  const [transactions, setTransactions] = useState(undefined);
-  const config = { headers: { Authorization: `Bearer ${token}` } };
+  const transactions = useGetTransactions();
 
   const showLoginPrompt = () => {
     setShowLoginModal(true);
@@ -25,14 +23,6 @@ export default function HomePage() {
 
   useQuickOut(showLoginPrompt);
   const logout = useLogout();
-
-  useEffect(() => {
-    axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/transactions`, config)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => console.error(err.response.data));
-  }, [])
 
   return (
     <HomeContainer>
@@ -42,15 +32,25 @@ export default function HomePage() {
       </Header>
 
       <TransactionsContainer>
-        <ul>
-          <TransactionItem />
-          <TransactionItem />
-        </ul>
+        {!transactions && <Oval color='#8c11be ' width={100} height={100} />
+        }
+        {transactions && transactions.length === 0 && <>Não há registros de entrada ou saída</>}
 
-        <article>
-          <strong>Saldo</strong>
-          <Value color={"positivo"}>2880,00</Value>
-        </article>
+
+        {transactions && transactions.length > 0 && (
+          <ListContainer>
+            <ul>
+              {transactions.map((transaction) => (
+                <TransactionItem key={transaction.id} transaction={transaction} />
+              ))}
+            </ul>
+            <article>
+              <strong>Saldo</strong>
+              <Value color={"positivo"}>2880,00</Value>
+            </article>
+          </ListContainer>
+        )}
+
       </TransactionsContainer>
 
 
@@ -83,30 +83,23 @@ const Header = styled.header`
   justify-content: space-between;
   padding: 0 2px 5px 2px;
   margin-bottom: 10px;
-  margin-top: 5px;
+  margin-top: 7px;
   font-size: 26px;
   color: white;
 `
 const TransactionsContainer = styled.article`
   flex-grow: 1;
-  background-color: #fff;
-  color: #000;
+  height: 0px;
+  background-color: white;
   border-radius: 5px;
-  padding: 16px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  article {
-    display: flex;
-    justify-content: space-between;   
-    strong {
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-  }
+  justify-content: center;
+  align-items: center;
+  color: #c6c6c6;
 `
+
 const ButtonsContainer = styled.section`
-  margin-top: 10px;
+  margin-top: 15px;
   margin-bottom: 5px;
   display: flex;
   gap: 15px;
@@ -129,21 +122,30 @@ const Value = styled.div`
   text-align: right;
   color: ${(props) => (props.color === "positivo" ? "green" : "red")};
 `
-const ListItemContainer = styled.li`
+
+const ListContainer = styled.article`
+  width: calc(100% - 32px);
+  height: calc(100% - 32px);
+  padding: 16px;
+  color: black;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-  color: #000000;
-  margin-right: 10px;
-  div span {
-    color: #c6c6c6;
-    margin-right: 10px;
+  ul {
+    overflow-y: auto;
+    scrollbar-width: none;
+    ::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
+  }
+  article {
+    display: flex;
+    justify-content: space-between;   
+    padding-top: 10px;
+    strong {
+      font-weight: 700;
+      text-transform: uppercase;
+    }
   }
 `
-
-const Span = styled.span`
-    color: #c6c6c6;
-    right: 35px;
-    position: absolute;
-`;

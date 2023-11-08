@@ -1,13 +1,15 @@
+import dayjs from "dayjs"
 import styled from "styled-components"
 
-export default function TransactionItem() {
+export default function TransactionItem({transaction}) {
+  const {date, description, value, type} = transaction
     return (
         <ItemContainer>
             <div>
-                <span>30/11</span>
-                <strong>Almoço mãe</strong>
+                <span>{dayjs(date).format('DD/MM')}</span>
+                <strong>{description}</strong>
             </div>
-            <Value color={"negativo"}>120,00</Value>
+            <Value color={type}>{value.toString().replace('R$ ', '')}</Value>
             <Span>x</Span>
         </ItemContainer>
     )
@@ -29,7 +31,7 @@ const ItemContainer = styled.li`
 const Value = styled.div`
   font-size: 16px;
   text-align: right;
-  color: ${(props) => (props.color === "positivo" ? "green" : "red")};
+  color: ${(props) => (props.color === "income" ? "green" : "red")};
 `
 
 const Span = styled.span`
