@@ -1,25 +1,28 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import styled from "styled-components"
 import HomePage from "./pages/HomePage"
-import SignInPage from "./pages/SignInPage"
+import LoginPage from "./pages/LoginPage"
 import SignUpPage from "./pages/SignUpPage"
-import TransactionsPage from "./pages/TransactionPage"
-import AuthContext from "./contexts/authContexts"
+import AddTransactionsPage from "./pages/AddTransactionPage"
+import EditTransactionsPage from "./pages/EditTransactionPage"
+import AuthContext from "./contexts/AuthContext"
 import { useState } from "react"
+import { mainColor } from "./constants/colors"
 
 export default function App() {
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  const [userName, setUserName] = useState(localStorage.getItem('userName'));
+  const [token, setToken] = useState(localStorage.getItem("token"))
+  const [userName, setUserName] = useState(localStorage.getItem("userName"))
 
   return (
     <PagesContainer>
       <AuthContext.Provider value={{ token, setToken, userName, setUserName }}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<SignInPage />} />
-            <Route path="/sign-up" element={<SignUpPage />} />
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/cadastro" element={<SignUpPage />} />
             <Route path="/home" element={<HomePage />} />
-            <Route path="/nova-transacao/:tipo" element={<TransactionsPage />} />
+            <Route path="/nova-transacao/:type" element={<AddTransactionsPage />} />
+            <Route path="/editar-transacao/:type" element={<EditTransactionsPage />} />
           </Routes>
         </BrowserRouter>
       </AuthContext.Provider>
@@ -28,9 +31,8 @@ export default function App() {
 }
 
 const PagesContainer = styled.main`
-  background-color: #8c11be;
+  background-color:  ${mainColor};
   width: calc(100vw - 50px);
   max-height: 100vh;
-  padding-left: 25px;
-  padding-right: 25px;
+  padding: 25px;
 `
