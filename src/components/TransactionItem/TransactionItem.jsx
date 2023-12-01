@@ -5,13 +5,13 @@ import { useDeleteTransaction } from "../../services/transactions"
 import { useNavigate } from "react-router-dom"
 
 export default function TransactionItem({ transaction, getTransactions }) {
-  const { _id, date, description, value, type } = transaction
+  const { id, date, description, value, type } = transaction
   const deleteTransaction = useDeleteTransaction()
   const navigate = useNavigate()
 
   function onClickDelete() {
-    const confirmDelete = window.confirm(`Tem certeza que deseja deletar ${description}?`)
-    if (confirmDelete) deleteTransaction(_id, getTransactions)
+    const confirmDelete = window.confirm(`Tem certeza que deseja deletar ${description}?`);
+    if (confirmDelete) deleteTransaction(id, getTransactions)
   }
 
   function onClickEdit() {

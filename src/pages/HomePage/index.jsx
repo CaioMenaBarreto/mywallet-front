@@ -16,13 +16,16 @@ export default function HomePage() {
   const navigate = useNavigate()
   const logout = useLogout()
   const { transactions, getTransactions } = useGetTransactions()
+  //Chamando a função que verifica se o usuário está logado ou não
   const QuickOutComponent = useQuickOut();
 
+  //Aqui estamos calculando o saldo do usuário
   function calcBalance() {
     const sum = transactions.reduce((acc, cur) => cur.type === "income" ? acc + cur.value : acc - cur.value, 0)
+    transactions.map((t) => console.log(t));
     return sum.toFixed(2)
   }
-
+  //verificando se informações são verdadeiras e não são undefined, null ou length = 0
   const balance = transactions && calcBalance()
 
   return (

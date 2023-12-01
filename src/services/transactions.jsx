@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom"
 export function useGetTransactions() {
     const [transactions, setTransactions] = useState(undefined)
     const { token } = useContext(AuthContext)
-    const navigate = useNavigate()
 
     const config = { headers: { Authorization: `Bearer ${token}` } }
 
@@ -43,7 +42,7 @@ export function useDeleteTransaction() {
     const config = { headers: { Authorization: `Bearer ${token}` } }
 
     return (id, getTransactions) => {
-        axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}/transactions/${id}`, config)
+            axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}/transactions/${id}`, config)
             .then(res => getTransactions())
             .catch(err => alert(err.response.data))
     }
