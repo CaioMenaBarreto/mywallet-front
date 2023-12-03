@@ -7,7 +7,7 @@ import { useEditTransaction } from "../../services/transactions"
 export default function EditTransactionsPage() {
   useQuickOut()
   const { type } = useParams()
-  const { state: { _id, description, value, type: apiType } } = useLocation()
+  const { state: { id, description, value, type: apiType } } = useLocation()
   const { form, handleForm } = useForm({ description, value })
   const typeText = type === "entrada" ? "Entrada" : "Saída"
   //chamando função que realiza a edição dos dados
@@ -16,7 +16,7 @@ export default function EditTransactionsPage() {
   //função que acompanha a alteração do input e armazena o que está sendo digitado pelo usuário
   function submitForm(e) {
     e.preventDefault()
-    editTransaction(_id, { ...form, type: apiType })
+    editTransaction(id, { ...form, type: apiType })
   }
 
   return (

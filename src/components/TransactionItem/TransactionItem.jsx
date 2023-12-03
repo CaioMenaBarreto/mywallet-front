@@ -3,6 +3,7 @@ import dayjs from "dayjs"
 import { IoMdClose } from "react-icons/io"
 import { useDeleteTransaction } from "../../services/transactions"
 import { useNavigate } from "react-router-dom"
+import Swal from "sweetalert2"
 
 export default function TransactionItem({ transaction, getTransactions }) {
   const { id, date, description, value, type } = transaction
@@ -10,8 +11,19 @@ export default function TransactionItem({ transaction, getTransactions }) {
   const navigate = useNavigate()
 
   function onClickDelete() {
-    const confirmDelete = window.confirm(`Tem certeza que deseja deletar ${description}?`);
-    if (confirmDelete) deleteTransaction(id, getTransactions)
+    const confirmDelete = Swal.fire({
+      title: `Você tem certeza que deseja deletar ${description}?`,
+      text: 'Essa ação não pode ser desfeita.',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, delete!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('Sua transação foi deletada.');
+      }
+      deleteTransaction(id, getTransactions)
+    })
   }
 
   function onClickEdit() {
@@ -28,7 +40,7 @@ export default function TransactionItem({ transaction, getTransactions }) {
         <strong onClick={onClickEdit}>{description}</strong>
       </div>
       <RightContainer>
-        <Value color={type}>{value.toFixed(2).toString().replace(".", ",")}</Value>
+        <Value color={type}>{value.toString().replace(".", ",")}</Value>
         <IoMdClose onClick={onClickDelete} />
       </RightContainer>
     </ItemContainer>

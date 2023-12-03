@@ -21,9 +21,8 @@ export default function HomePage() {
 
   //Aqui estamos calculando o saldo do usuário
   function calcBalance() {
-    const sum = transactions.reduce((acc, cur) => cur.type === "income" ? acc + cur.value : acc - cur.value, 0)
-    transactions.map((t) => console.log(t));
-    return sum.toFixed(2)
+    const sum = transactions.reduce((acc, cur) => cur.type === "income" ? Number(acc) + Number(cur.value) : Number(acc) - Number(cur.value), 0)
+    return Number(sum.toFixed(2));
   }
   //verificando se informações são verdadeiras e não são undefined, null ou length = 0
   const balance = transactions && calcBalance()
