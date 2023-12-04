@@ -18,6 +18,9 @@ const GlobalStyle = createGlobalStyle`
         cursor: pointer;
         width: 100%;
         padding: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     h1 {
         font-weight: 700;

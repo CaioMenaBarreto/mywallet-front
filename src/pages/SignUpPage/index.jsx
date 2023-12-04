@@ -4,17 +4,25 @@ import useQuickIn from "../../hooks/useQuickIn"
 import useForm from "../../hooks/useForm"
 import { useSignUp } from "../../services/auth"
 import { SingUpContainer } from "./styled"
+import Swal from "sweetalert2"
+import { useState } from "react"
+import { ThreeDots } from "react-loader-spinner"
 
 export default function SignUpPage() {
   const { form, handleForm } = useForm({ name: "", email: "", password: "", confirmPassword: "" })
   useQuickIn()
-  const signUp = useSignUp()
+  const signUp = useSignUp();
+  const [handleButton, setHandleButton] = useState(false);
+
 
   function submitForm(e) {
     e.preventDefault()
-    if (form.password !== form.confirmPassword) return alert("As senhas não coincidem!")
+    if (form.password !== form.confirmPassword) return Swal.fire({
+      text: "As senhas não coincidem!"
+    })
 
     delete form.confirmPassword
+    setHandleButton(true);
     signUp(form)
   }
 
@@ -58,7 +66,15 @@ export default function SignUpPage() {
           value={form.confirmPassword}
           onChange={handleForm}
         />
-        <button type="submit">Cadastrar</button>
+        {handleButton ? (
+          <button disabled={handleButton} type="submit">
+            <ThreeDots type="ThreeDots" color="white" height={40} width={40} />
+          </button>
+        ) : (
+          <button disabled={handleButton} type="submit">
+            Cadastrar
+          </button>
+        )}
       </form>
 
       <Link to="/">

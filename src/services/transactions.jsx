@@ -12,7 +12,9 @@ export function useGetTransactions() {
     function getTransactions() {
         axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/transactions`, config)
             .then(res => setTransactions(res.data))
-            .catch((err) => console.log(err.response.data))
+            .catch((err) => Swal.fire({
+                text: `${err.response.data}`
+            }))
     }
     
 
@@ -32,7 +34,9 @@ export function useAddTransaction() {
     return (body) => {
         axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/transactions`, body, config)
             .then(res => navigate("/home"))
-            .catch(err => alert(err.response.data))
+            .catch(err => Swal.fire({
+                text: `${err.response.data}`
+            }))
     }
 
 }
@@ -44,7 +48,9 @@ export function useDeleteTransaction() {
     return (id, getTransactions) => {
             axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}/transactions/${id}`, config)
             .then(res => getTransactions())
-            .catch(err => alert(err.response.data))
+            .catch(err => Swal.fire({
+                text: `${err.response.data}`
+            }))
     }
 }
 
@@ -56,6 +62,8 @@ export function useEditTransaction() {
     return (id, body) => {
         axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/transactions/${id}`, body, config)
             .then(res => navigate("/home"))
-            .catch(err => alert(err.response.data))
+            .catch(err => Swal.fire({
+                text: `${err.response.data}`
+            }))
     }
 }

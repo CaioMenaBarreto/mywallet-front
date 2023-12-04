@@ -2,6 +2,7 @@ import axios from "axios"
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import AuthContext from "../contexts/AuthContext"
+import Swal from "sweetalert2"
 
 export function useSignUp() {
     const navigate = useNavigate()
@@ -9,7 +10,9 @@ export function useSignUp() {
     return (body) => {
         axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/sign-up`, body)
             .then(res => navigate("/"))
-            .catch(err => alert(err.response.data))
+            .catch(err =>Swal.fire({
+                text: `${err.response.data}`
+            }))
     }
 }
 
@@ -26,7 +29,9 @@ export function useLogin() {
                 localStorage.setItem("userName", res.data.userName)
                 navigate("/home")
             })
-            .catch((err) => alert(err.response.data))
+            .catch((err) => Swal.fire({
+                text: `${err.response.data}`
+            }))
     }
 }
 
