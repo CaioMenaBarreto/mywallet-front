@@ -7,6 +7,23 @@ const GlobalStyle = createGlobalStyle`
         font-style: normal;
         font-weight: 400;
     }
+    .transaction-button {
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        background-color: ${mainColorButton};
+        font-size: 20px;
+        font-weight: 600;
+        color: ${mainContrastColor};
+        cursor: pointer;
+        width: 100%;
+        height: 90px;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
     button {
         outline: none;
         border: none;

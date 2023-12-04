@@ -53,14 +53,14 @@ export default function HomePage() {
 
 
       <ButtonsContainer>
-        <button onClick={() => navigate("/nova-transacao/entrada")}>
+        <div className="transaction-button" onClick={() => navigate("/nova-transacao/entrada")}>
           <AiOutlinePlusCircle />
           <p>Nova <br /> entrada</p>
-        </button>
-        <button onClick={() => navigate("/nova-transacao/saida")}>
+        </div>
+        <div className="transaction-button" onClick={() => navigate("/nova-transacao/saida")}>
           <AiOutlineMinusCircle />
           <p>Nova <br />saída</p>
-        </button>
+        </div>
       </ButtonsContainer>
 
     </HomeContainer>
