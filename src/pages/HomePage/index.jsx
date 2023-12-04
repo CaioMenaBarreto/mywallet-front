@@ -45,7 +45,7 @@ export default function HomePage() {
             </ul>
             <article>
               <strong>Saldo</strong>
-              <Value color={balance > 0 ? "positivo" : "negativo"}>{balance.toString().replace(".", ",")}</Value>
+              <Value color={balance > 0 ? "positivo" : "negativo"}>{Number(balance).toFixed(2).toString().replace(".", ",")}</Value>
             </article>
           </ListContainer>
         )}

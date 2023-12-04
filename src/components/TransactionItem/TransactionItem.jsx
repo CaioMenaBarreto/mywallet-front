@@ -21,8 +21,8 @@ export default function TransactionItem({ transaction, getTransactions }) {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire('Sua transação foi deletada.');
+        deleteTransaction(id, getTransactions)
       }
-      deleteTransaction(id, getTransactions)
     })
   }
 
@@ -40,7 +40,7 @@ export default function TransactionItem({ transaction, getTransactions }) {
         <strong onClick={onClickEdit}>{description}</strong>
       </div>
       <RightContainer>
-        <Value color={type}>{value.toString().replace(".", ",")}</Value>
+        <Value color={type}>{Number(value).toFixed(2).toString().replace(".", ",")}</Value>
         <IoMdClose onClick={onClickDelete} />
       </RightContainer>
     </ItemContainer>
