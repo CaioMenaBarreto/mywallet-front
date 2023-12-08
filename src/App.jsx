@@ -10,16 +10,13 @@ import { useState } from "react"
 import { mainColor } from "./constants/colors"
 
 export default function App() {
-  // Estado local para armazenar o token e o nome do usuário
   const [token, setToken] = useState(localStorage.getItem("token"))
   const [userName, setUserName] = useState(localStorage.getItem("userName"))
 
   return (
     <PagesContainer>
-      {/* Fornecendo o contexto de autenticação para toda a aplicação */}
       <AuthContext.Provider value={{ token, setToken, userName, setUserName }}>
         <BrowserRouter>
-          {/* Definindo as rotas da aplicação */}
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/cadastro" element={<SignUpPage />} />
@@ -33,7 +30,6 @@ export default function App() {
   )
 }
 
-// Estilização do componente principal
 const PagesContainer = styled.main`
   background-color:  ${mainColor};
   width: calc(100vw - 50px);

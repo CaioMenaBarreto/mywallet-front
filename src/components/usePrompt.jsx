@@ -1,12 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-// Componente funcional para exibir um modal de prompt em caso de erro de login
 export default function UsePromptLogin(){
-    // Obtém a função de navegação do React Router
     const navigate = useNavigate();
 
-    // Componente Modal: cria uma sobreposição de tela para o modal
     return (
         <Modal>
           <ModalContent>
