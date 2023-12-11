@@ -4,7 +4,7 @@ O My Wallet é a solução ideal para quem busca facilidade e controle nas finan
 
 Com My Wallet, tenha sempre seu saldo atualizado com base nas transações realizadas. Uma interface amigável torna a gestão financeira simples, proporcionando uma visão clara e detalhada do seu estado financeiro.
 
-<img src="https://github.com/CaioMenaBarreto/levo-um-casaquinho/blob/main/src/assets/img-do-projeto.png" alt="">
+<img src="https://github.com/CaioMenaBarreto/mywallet-front/blob/main/public/img-do-projeto.png" alt="">
 
 # Demo
 [Link do projeto](https://mywallet-ashy.vercel.app/)
