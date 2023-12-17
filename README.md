@@ -19,7 +19,11 @@ Além disso, ao clicar no botão `X` localizado á direita de uma transação vo
 Você pode também editar dados a respeito da transação financeira se clicar em cima da descrição da mesma. Ao clicar na descrição o usuário será redirecionado para uma tela em que é possível alterar os dados da transação.
 
 # Rotas
-Implementamos quatro rotas distintas:
+Implementamos seis rotas distintas:
+
+- POST /: Esta rota permite que o usuário realize login se inserir as informações corretas na entrada.
+
+- POST /sign-up: Esta rota permite que o usuário realize seu cadastro.
 
 - GET /transactions: Esta rota retorna todas as transações do usuário logado.
 
